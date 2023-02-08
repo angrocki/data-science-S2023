@@ -160,7 +160,7 @@ suggested improvement.
 mpg %>%
   ggplot(aes(x = cyl)) +
   geom_bar() +
-  facet_grid(~ manufacturer)
+  facet_wrap(~manufacturer)
 ```
 
 <!-- include-exit-ticket -->
