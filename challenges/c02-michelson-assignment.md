@@ -264,6 +264,13 @@ LIGHTSPEED_VACUUM <= LIGHTSPEED_MICHELSON + LIGHTSPEED_PM
 #True error
 ERROR <- LIGHTSPEED_VACUUM - LIGHTSPEED_MICHELSON
 PERCENT_ERROR <- ERROR/LIGHTSPEED_VACUUM * 100
+RATIO <-ERROR/LIGHTSPEED_PM
+RATIO
+```
+
+    ## [1] -2.971412
+
+``` r
 ERROR
 ```
 
@@ -293,7 +300,8 @@ true error was -151.542, meaning his estimate was 151.542 larger than
 the true value. His estimate, 51, was lower than the 151.542. Although
 his uncertainty was lower ( a smaller estimated error) than his true
 error, his percent error of 0.05 is extremely low which helps put the
-numbers into perspective.
+numbers into perspective. The true error was 2.97x, almost 3x, bigger
+than Michelson’s estimate.
 
 The following plot shows all of Michelson’s data as a [control
 chart](https://en.wikipedia.org/wiki/Control_chart); this sort of plot
@@ -372,12 +380,13 @@ df_q2 %>%
 
 **Observations**: Similarities -The majority of both data sets fall
 within the range of around 299900 and 300000 as shown with the dotted
-lines. Both data sets also have outliers and collect multiple data
-samples in one day. Differences - The real data seems to have more
-variation and outliers at the begining of the of June where the outliers
-in the simulated data seems to be even throughout the different dates.
-In addition, the real data seems to have more variation in total than
-the simulated graph.
+lines. Both data sets also have points outside Michelson’s range of the
+speed of light indicated by the dashed black lines and collect multiple
+data samples in one day. Differences - The real data seems to have more
+variation at the begining of June where the simulated data seems to have
+an even amount of variation throughout the different dates. In addition,
+the real data seems to have more variation in total than the simulated
+graph.
 
 ### **q5** You have access to a few other variables. Construct a few visualizations of `VelocityVacuum` against these other factors. Are there other patterns in the data that might help explain the difference between Michelson’s estimate and `LIGHTSPEED_VACUUM`?
 
@@ -443,6 +452,8 @@ df_q2 %>%
   velocity value, and generally not significantly impacted by the
   different variables. I believe the error was in the procedure that
   resulted in higher measured velocities.
+- No, there are no patterns in the data that might explain the
+  difference between Michelson’s estimate and \`LIGHTSPEED_VACUMN\`.
 
 ## Bibliography
 
