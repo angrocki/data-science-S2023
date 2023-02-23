@@ -176,16 +176,11 @@ df_stang_long <-
   pivot_longer(
     names_to = c(".value", "angle"),
     names_sep = "_",
-    values_to = "val",
     cols = c(-thick, -alloy),
     ) %>% 
   filter(E > 0) %>% 
-  mutate(angle = as.integer(angle))  
-#Change mu to nu 
-colnames(df_stang_long)[5] <- "nu"
-  
-  
-
+  mutate(angle = as.integer(angle)) %>%
+  rename("nu" = "mu")
 df_stang_long
 ```
 
@@ -357,10 +352,11 @@ df_stang_long %>%
 
 - I can also find the range of values for the elastic modulus in the
   graphs above and help explain why there is a range in values.
-- Generally as the thickness increases the elastic modulus decreases.
-  This is not a clean or signficant correlation between the thickness
-  and elastic modulus since the thickness at 0.064 does not match the
-  trend of the other 3 thickness measurements.
+- There is a loose correlation between thickness and the elastic
+  modulus. This is not a clean correlation between the thickness and
+  elastic modulus since the thickness at 0.064 does not match the trend
+  of the other 3 thickness measurements that showed as the thickness
+  increased the elastic modulus decreased.
 - I also plotted the elastic modulus vs the angle to see if there was a
   correlation, but there was not a correlation between the angle and
   elastic modulus. I included the color of the dots to represent the
@@ -411,7 +407,12 @@ df_stang_long %>%
     generally leads a higher E value.
   - I don’t believe the evidence is conclusive because certain densities
     do not follow the trend. I believe more data needs to be taken to
-    conclusively contradict or support the claim.
+    conclusively contradict or support the claim. Specifically after
+    listening to the presentation, I think additional measurements
+    should be taken 0.081 using the same machinery as the other
+    experiments. I also believe taking more data at every .1 decrease in
+    width starting at .8 and moving down to .1. The width decrease would
+    show either a clear trend contradicting the claim or supporting it.
 
 # References
 

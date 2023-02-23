@@ -78,16 +78,11 @@ df_stang_long <-
   pivot_longer(
     names_to = c(".value", "angle"),
     names_sep = "_",
-    values_to = "val",
     cols = c(-thick, -alloy),
     ) %>% 
   filter(E > 0) %>% 
-  mutate(angle = as.integer(angle))  
-#Change mu to nu 
-colnames(df_stang_long)[5] <- "nu"
-  
-  
-
+  mutate(angle = as.integer(angle)) %>%
+  rename("nu" = "mu")
 df_stang_long
 ```
 
@@ -146,7 +141,7 @@ df_stang_long %>%
 -   What thicknesses were tested?
     -   They tested a thickness of 0.022, 0.032, 0.064, and 0.081.
 -   What is the range of E?
-    -   As noticed in the "one true value" question, the range of E is from 9900 to 10700 with a mean of  10335. This feels like a large range for the elastic modulus of one type of aluminum alloy.
+    -   As noticed in the "one true value" question, the range of E is from 9900 to 10700 with a mean of 10335. This feels like a large range for the elastic modulus of one type of aluminum alloy.
 
 ## Visualize
 
@@ -172,7 +167,7 @@ df_stang_long %>%
 **Observations**:
 
 -   I can also find the range of values for the elastic modulus in the graphs above and help explain why there is a range in values.
--   Generally as the thickness increases the elastic modulus decreases. This is not a clean or signficant correlation between the thickness and elastic modulus since the thickness at 0.064 does not match the trend of the other 3 thickness measurements.
+-   There is a loose correlation between thickness and the elastic modulus. This is not a clean correlation between the thickness and elastic modulus since the thickness at 0.064 does not match the trend of the other 3 thickness measurements that showed as the thickness increased the elastic modulus decreased.
 -   I also plotted the elastic modulus vs the angle to see if there was a correlation, but there was not a correlation between the angle and elastic modulus. I included the color of the dots to represent the thickness, and saw similar trend that generally as the thickness increases the elastic modules decreases.
 -   The thickness of the aluminium helps explain the range of values for the elastic modulus although I would need additional information to answer my question. I would need to understand the elastic modulus more deeply to gain a true understanding of what the range means for the material, and if the range is a significant difference in terms of the material properties for the aluminum alloy.
 
@@ -196,7 +191,7 @@ df_stang_long %>%
 -   Does this graph support or contradict the claim above?
     -   The graph contradicts the claim above. If the graph supported the claim above that "elasticity `E` is an intensive material property" were true, then the graph would show a cluster of points in one horizontal area with varying degrees of thickness.
     -   The graph contradicts the claim because there is a cluster of purple dots representing more material ( a greater thickness) towards the bottom of the graph representing that more mass generally leads to a lower E value, while there is a cluster of red dots with one dot that does not follow the general trend at the top of the graph representing less mass ( a lower thickness) showing that less mass generally leads a higher E value.
-    -   I don't believe the evidence is conclusive because certain densities do not follow the trend. I believe more data needs to be taken to conclusively contradict or support the claim.
+    -   I don't believe the evidence is conclusive because certain densities do not follow the trend. I believe more data needs to be taken to conclusively contradict or support the claim. Specifically after listening to the presentation, I think additional measurements should be taken 0.081 using the same machinery as the other experiments. I also believe taking more data at every .1 decrease in width starting at .8 and moving down to .1. The width decrease would show either a clear trend contradicting the claim or supporting it.
 
 # References
 
