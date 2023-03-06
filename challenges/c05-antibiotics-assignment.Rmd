@@ -1,50 +1,81 @@
 ---
 title: "Antibiotics"
-author: "(Your name here)"
-date: 2020-
+author: "An Grocki"
+date: 2023-3-5
 output:
   github_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
-*Purpose*: Creating effective data visualizations is an *iterative* process; very rarely will the first graph you make be the most effective. The most effective thing you can do to be successful in this iterative process is to *try multiple graphs* of the same data.
+*Purpose*: Creating effective data visualizations is an *iterative*
+process; very rarely will the first graph you make be the most
+effective. The most effective thing you can do to be successful in this
+iterative process is to *try multiple graphs* of the same data.
 
-Furthermore, judging the effectiveness of a visual is completely dependent on *the question you are trying to answer*. A visual that is totally ineffective for one question may be perfect for answering a different question.
+Furthermore, judging the effectiveness of a visual is completely
+dependent on *the question you are trying to answer*. A visual that is
+totally ineffective for one question may be perfect for answering a
+different question.
 
-In this challenge, you will practice *iterating* on data visualization, and will anchor the *assessment* of your visuals using two different questions.
+In this challenge, you will practice *iterating* on data visualization,
+and will anchor the *assessment* of your visuals using two different
+questions.
 
-*Note*: Please complete your initial visual design **alone**. Work on both of your graphs alone, and save a version to your repo *before* coming together with your team. This way you can all bring a diversity of ideas to the table!
+*Note*: Please complete your initial visual design **alone**. Work on
+both of your graphs alone, and save a version to your repo *before*
+coming together with your team. This way you can all bring a diversity
+of ideas to the table!
 
 <!-- include-rubric -->
+
 # Grading Rubric
+
 <!-- -------------------------------------------------- -->
 
-Unlike exercises, **challenges will be graded**. The following rubrics define how you will be graded, both on an individual and team basis.
+Unlike exercises, **challenges will be graded**. The following rubrics
+define how you will be graded, both on an individual and team basis.
 
 ## Individual
+
 <!-- ------------------------- -->
 
-| Category | Needs Improvement | Satisfactory |
-|----------|----------------|--------------|
-| Effort | Some task __q__'s left unattempted | All task __q__'s attempted |
-| Observed | Did not document observations, or observations incorrect | Documented correct observations based on analysis |
-| Supported | Some observations not clearly supported by analysis | All observations clearly supported by analysis (table, graph, etc.) |
-| Assessed | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support |
-| Specified | Uses the phrase "more data are necessary" without clarification | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
-| Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability | Code sufficiently close to the [style guide](https://style.tidyverse.org/) |
+| Category    | Needs Improvement                                                                                                | Satisfactory                                                                                                               |
+|-------------------|----------------------------|-------------------------|
+| Effort      | Some task **q**'s left unattempted                                                                               | All task **q**'s attempted                                                                                                 |
+| Observed    | Did not document observations, or observations incorrect                                                         | Documented correct observations based on analysis                                                                          |
+| Supported   | Some observations not clearly supported by analysis                                                              | All observations clearly supported by analysis (table, graph, etc.)                                                        |
+| Assessed    | Observations include claims not supported by the data, or reflect a level of certainty not warranted by the data | Observations are appropriately qualified by the quality & relevance of the data and (in)conclusiveness of the support      |
+| Specified   | Uses the phrase "more data are necessary" without clarification                                                  | Any statement that "more data are necessary" specifies which *specific* data are needed to answer what *specific* question |
+| Code Styled | Violations of the [style guide](https://style.tidyverse.org/) hinder readability                                 | Code sufficiently close to the [style guide](https://style.tidyverse.org/)                                                 |
 
 ## Due Date
+
 <!-- ------------------------- -->
 
-All the deliverables stated in the rubrics above are due **at midnight** before the day of the class discussion of the challenge. See the [Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true) for more information.
+All the deliverables stated in the rubrics above are due **at midnight**
+before the day of the class discussion of the challenge. See the
+[Syllabus](https://docs.google.com/document/d/1qeP6DUS8Djq_A0HMllMqsSqX3a9dbcx1/edit?usp=sharing&ouid=110386251748498665069&rtpof=true&sd=true)
+for more information.
 
 ```{r setup}
 library(tidyverse)
 library(ggrepel)
 ```
 
-*Background*: The data[1] we study in this challenge report the [*minimum inhibitory concentration*](https://en.wikipedia.org/wiki/Minimum_inhibitory_concentration) (MIC) of three drugs for different bacteria. The smaller the MIC for a given drug and bacteria pair, the more practical the drug is for treating that particular bacteria. An MIC value of *at most* 0.1 is considered necessary for treating human patients.
+*Background*: The data[1] we study in this challenge report the
+[*minimum inhibitory
+concentration*](https://en.wikipedia.org/wiki/Minimum_inhibitory_concentration)
+(MIC) of three drugs for different bacteria. The smaller the MIC for a
+given drug and bacteria pair, the more practical the drug is for
+treating that particular bacteria. An MIC value of *at most* 0.1 is
+considered necessary for treating human patients.
 
-These data report MIC values for three antibiotics---penicillin, streptomycin, and neomycin---on 16 bacteria. Bacteria are categorized into a genus based on a number of features, including their resistance to antibiotics.
+These data report MIC values for three antibiotics---penicillin,
+streptomycin, and neomycin---on 16 bacteria. Bacteria are categorized
+into a genus based on a number of features, including their resistance
+to antibiotics.
 
 ```{r load}
 ## NOTE: If you extracted all challenges to the same location,
@@ -57,104 +88,243 @@ df_antibiotics %>% knitr::kable()
 ```
 
 # Visualization
+
 <!-- -------------------------------------------------- -->
 
-### __q1__ Prototype 5 visuals
+### **q1** Prototype 5 visuals
 
-To start, construct **5 qualitatively different visualizations of the data** `df_antibiotics`. These **cannot** be simple variations on the same graph; for instance, if two of your visuals could be made identical by calling `coord_flip()`, then these are *not* qualitatively different.
+To start, construct **5 qualitatively different visualizations of the
+data** `df_antibiotics`. These **cannot** be simple variations on the
+same graph; for instance, if two of your visuals could be made identical
+by calling `coord_flip()`, then these are *not* qualitatively different.
 
-For all five of the visuals, you must show information on *all 16 bacteria*. For the first two visuals, you must *show all variables*.
+For all five of the visuals, you must show information on *all 16
+bacteria*. For the first two visuals, you must *show all variables*.
 
-*Hint 1*: Try working quickly on this part; come up with a bunch of ideas, and don't fixate on any one idea for too long. You will have a chance to refine later in this challenge.
+*Hint 1*: Try working quickly on this part; come up with a bunch of
+ideas, and don't fixate on any one idea for too long. You will have a
+chance to refine later in this challenge.
 
-*Hint 2*: The data `df_antibiotics` are in a *wide* format; it may be helpful to `pivot_longer()` the data to make certain visuals easier to construct.
+*Hint 2*: The data `df_antibiotics` are in a *wide* format; it may be
+helpful to `pivot_longer()` the data to make certain visuals easier to
+construct.
 
 #### Visual 1 (All variables)
 
-In this visual you must show *all three* effectiveness values for *all 16 bacteria*. You must also show whether or not each bacterium is Gram positive or negative.
+In this visual you must show *all three* effectiveness values for *all
+16 bacteria*. You must also show whether or not each bacterium is Gram
+positive or negative.
 
 ```{r q1.1}
-# WRITE YOUR CODE HERE
+#Understand and format data
+glimpse(df_antibiotics)
+summary(df_antibiotics)
+df_antibiotics_long <- df_antibiotics %>% 
+  pivot_longer(
+    names_to = "antibiotic",
+    values_to = "MIC",
+    cols = ends_with("in")
+  )
+glimpse(df_antibiotics_long)
+summary(df_antibiotics_long)
+df_antibiotics_long %>% knitr::kable()
+
+```
+
+```{r}
+#Visual 1
+df_antibiotics_long %>% 
+  ggplot(aes(antibiotic, MIC)) +
+  geom_boxplot() + 
+  geom_point(mapping = aes(color = bacteria, shape = gram)) +
+  geom_hline(
+    yintercept = 0.1,
+    linetype = "dotted",
+    color = "red"
+  ) +
+  scale_y_log10() 
 ```
 
 #### Visual 2 (All variables)
 
-In this visual you must show *all three* effectiveness values for *all 16 bacteria*. You must also show whether or not each bacterium is Gram positive or negative.
+In this visual you must show *all three* effectiveness values for *all
+16 bacteria*. You must also show whether or not each bacterium is Gram
+positive or negative.
 
-Note that your visual must be *qualitatively different* from *all* of your other visuals.
+Note that your visual must be *qualitatively different* from *all* of
+your other visuals.
 
 ```{r q1.2}
 # WRITE YOUR CODE HERE
+df_antibiotics_long %>% 
+  ggplot(aes( MIC, antibiotic, fill = gram )) + 
+  geom_col()+
+  facet_wrap(~bacteria, scales = "free_x") +
+  geom_vline(
+    xintercept = 0.1,
+    linetype = "dotted",
+    color = "red"
+  ) 
 ```
 
 #### Visual 3 (Some variables)
 
-In this visual you may show a *subset* of the variables (`penicillin`, `streptomycin`, `neomycin`, `gram`), but you must still show *all 16 bacteria*.
+In this visual you may show a *subset* of the variables (`penicillin`,
+`streptomycin`, `neomycin`, `gram`), but you must still show *all 16
+bacteria*.
 
-Note that your visual must be *qualitatively different* from *all* of your other visuals.
+Note that your visual must be *qualitatively different* from *all* of
+your other visuals.
 
 ```{r q1.3}
 # WRITE YOUR CODE HERE
+df_antibiotics%>% 
+  ggplot(aes( penicillin,streptomycin, shape = gram )) + 
+  geom_point(mapping = aes(color = bacteria)) +
+  geom_hline(
+    yintercept = 0.1,
+    linetype = "dotted",
+    color = "red"
+  ) +
+  geom_vline(
+    xintercept = 0.1,
+    linetype = "dotted",
+    color = "red"
+  ) +
+  scale_y_log10() +
+  scale_x_log10()
 ```
 
 #### Visual 4 (Some variables)
 
-In this visual you may show a *subset* of the variables (`penicillin`, `streptomycin`, `neomycin`, `gram`), but you must still show *all 16 bacteria*.
+In this visual you may show a *subset* of the variables (`penicillin`,
+`streptomycin`, `neomycin`, `gram`), but you must still show *all 16
+bacteria*.
 
-Note that your visual must be *qualitatively different* from *all* of your other visuals.
+Note that your visual must be *qualitatively different* from *all* of
+your other visuals.
 
 ```{r q1.4}
-# WRITE YOUR CODE HERE
+df_antibiotics_long %>% 
+  ggplot(aes(MIC, bacteria)) +
+  geom_col(mapping = aes(fill = antibiotic)) + 
+  scale_x_log10()+
+  geom_vline(
+    xintercept = 0.1,
+    linetype = "dotted",
+    color = "red"
+  ) 
+  
+  
 ```
 
 #### Visual 5 (Some variables)
 
-In this visual you may show a *subset* of the variables (`penicillin`, `streptomycin`, `neomycin`, `gram`), but you must still show *all 16 bacteria*.
+In this visual you may show a *subset* of the variables (`penicillin`,
+`streptomycin`, `neomycin`, `gram`), but you must still show *all 16
+bacteria*.
 
-Note that your visual must be *qualitatively different* from *all* of your other visuals.
+Note that your visual must be *qualitatively different* from *all* of
+your other visuals.
 
 ```{r q1.5}
-# WRITE YOUR CODE HERE
+df_antibiotics_long %>% 
+  ggplot(aes( gram, MIC)) +
+  geom_violin() + 
+  geom_point(mapping = aes(color = bacteria)) +
+  geom_hline(
+    yintercept = 0.1,
+    linetype = "dotted",
+    color = "red"
+  ) +
+  facet_wrap(~ antibiotic) +
+  scale_y_log10() 
 ```
 
-### __q2__ Assess your visuals
+### **q2** Assess your visuals
 
-There are **two questions** below; use your five visuals to help answer both Guiding Questions. Note that you must also identify which of your five visuals were most helpful in answering the questions.
+There are **two questions** below; use your five visuals to help answer
+both Guiding Questions. Note that you must also identify which of your
+five visuals were most helpful in answering the questions.
 
-*Hint 1*: It's possible that *none* of your visuals is effective in answering the questions below. You may need to revise one or more of your visuals to answer the questions below!
+*Hint 1*: It's possible that *none* of your visuals is effective in
+answering the questions below. You may need to revise one or more of
+your visuals to answer the questions below!
 
-*Hint 2*: It's **highly unlikely** that the same visual is the most effective at helping answer both guiding questions. **Use this as an opportunity to think about why this is.**
+*Hint 2*: It's **highly unlikely** that the same visual is the most
+effective at helping answer both guiding questions. **Use this as an
+opportunity to think about why this is.**
 
 #### Guiding Question 1
 
-> How do the three antibiotics vary in their effectiveness against bacteria of different genera and Gram stain?
+> How do the three antibiotics vary in their effectiveness against
+> bacteria of different genera and Gram stain?
 
 *Observations*
-- What is your response to the question above?
-  - (Write your response here)
-- Which of your visuals above (1 through 5) is **most effective** at helping to answer this question?
-  - (Write your response here)
-- Why?
-  - (Write your response here)
+
+\- What is your response to the question above?
+
+\- Penicillin is only effective with positive gram bacteria.
+Streptomycin is effective with at most one negative gram bacteria and
+some positive gram bacteria. Neomycin is effective with the largest
+range of bacteria that includes both negative and positive bacteria. All
+three antibiotics are effective against staphylococcus aureus, but
+neomcycin requires the smallest concentrations, with penicillin and
+streptomycin requiring around the same amount.
+
+ - Which of your visuals above (1 through 5) is **most effective** at
+helping to answer this question?
+
+\- Visual 5
+
+Why?
+
+ - It showed all the variables in clear way that I could understand and
+synthesize. The large shape of violin graph made it easier to see
+general trends as opposed to getting lost in the details. The red dashed
+line was a clear indicting of which antibiotics where effective since I
+only had to look at below the dashed line. I also think splitting it up
+into three graphs based on the antibiotics made it easy to compare
+between them, especially with a common scale for the MIC value. The
+split for positive vs negative gram was also easy to see.
 
 #### Guiding Question 2
 
-In 1974 *Diplococcus pneumoniae* was renamed *Streptococcus pneumoniae*, and in 1984 *Streptococcus fecalis* was renamed *Enterococcus fecalis* [2]. 
+In 1974 *Diplococcus pneumoniae* was renamed *Streptococcus pneumoniae*,
+and in 1984 *Streptococcus fecalis* was renamed *Enterococcus fecalis*
+[2].
 
-> Why was *Diplococcus pneumoniae* was renamed *Streptococcus pneumoniae*?
+> Why was *Diplococcus pneumoniae* was renamed *Streptococcus
+> pneumoniae*?
 
 *Observations*
-- What is your response to the question above?
-  - (Write your response here)
-- Which of your visuals above (1 through 5) is **most effective** at helping to answer this question?
-  - (Write your response here)
-- Why?
-  - (Write your response here)
 
+\- What is your response to the question above?
+
+\- Diplococcus pneumoniae was renamed to Streptococcus pneumonia because
+it requires a high streptomycin MIC value at around 10. Furthermore,
+other Streptococcus named bacteria also had a large MIC value that
+ranges from 1 to around 15.
+
+\- Which of your visuals above (1 through 5) is **most effective** at
+helping to answer this question?
+
+\- Visual 2 was most helpful.
+
+-Why?
+
+\- The names of each bacteria was labeled very large and clear at the
+top of each graph, so I could quickly glance over the names and find
+Diplococcus pneumoniae and other strep named bacteria. Moreover, it was
+easy to read the MIC value of each bacteria for streptomycin because the
+scales were different for each bacteria.
 
 # References
+
 <!-- -------------------------------------------------- -->
 
-[1] Neomycin in skin infections: A new topical antibiotic with wide antibacterial range and rarely sensitizing. Scope. 1951;3(5):4-7.
+[1] Neomycin in skin infections: A new topical antibiotic with wide
+antibacterial range and rarely sensitizing. Scope. 1951;3(5):4-7.
 
-[2] Wainer and Lysen, "That's Funny..." *American Scientist* (2009) [link](https://www.americanscientist.org/article/thats-funny)
+[2] Wainer and Lysen, "That's Funny..." *American Scientist* (2009)
+[link](https://www.americanscientist.org/article/thats-funny)
