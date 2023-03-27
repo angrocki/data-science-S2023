@@ -87,6 +87,10 @@ library(tidyverse)
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
+``` r
+options(pillar.sigfig = 5)
+```
+
 *Background*: In 2014, some crazy Quebecois physicists estimated $\pi$
 with a pump-action shotgun\[1,2\]. Their technique was based on the
 *Monte Carlo method*, a general strategy for turning deterministic
@@ -204,9 +208,9 @@ df_q1
 ```
 
     ## # A tibble: 1 × 2
-    ##    mean    sd
-    ##   <dbl> <dbl>
-    ## 1  3.15  1.64
+    ##     mean     sd
+    ##    <dbl>  <dbl>
+    ## 1 3.1456 1.6394
 
 ### **q2** Using your data in `df_q1`, estimate $\pi$.
 
@@ -219,9 +223,9 @@ pi_est
 ```
 
     ## # A tibble: 1 × 1
-    ##    mean
-    ##   <dbl>
-    ## 1  3.15
+    ##     mean
+    ##    <dbl>
+    ## 1 3.1456
 
 # Quantifying Uncertainty
 
@@ -247,9 +251,9 @@ df_clt
 ```
 
     ## # A tibble: 1 × 5
-    ##    mean    sd      se    lo    hi
-    ##   <dbl> <dbl>   <dbl> <dbl> <dbl>
-    ## 1  3.15  1.64 0.00518  3.14  3.16
+    ##     mean     sd        se     lo     hi
+    ##    <dbl>  <dbl>     <dbl>  <dbl>  <dbl>
+    ## 1 3.1456 1.6394 0.0051841 3.1355 3.1558
 
 **Observations**:
 
