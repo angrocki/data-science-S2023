@@ -40,6 +40,7 @@ All the deliverables stated in the rubrics above are due **at midnight** before 
 
 ```{r setup}
 library(tidyverse)
+options(pillar.sigfig = 5)
 ```
 
 *Background*: In 2014, some crazy Quebecois physicists estimated $\pi$ with a pump-action shotgun[1,2]. Their technique was based on the *Monte Carlo method*, a general strategy for turning deterministic problems into random sampling.
