@@ -202,8 +202,8 @@ df_data<- tibble(
   x = runif(n, min = 0, max = 1), 
   y = runif(n, min = 0, max = 1))  # Generate the data
 df_q1 <- df_data %>% 
-  mutate(stats = (x^2+y^2 <= 1)) %>% #Check that data is within the unit circle 
-  summarize(mean = mean(stats)*4, sd = sd(stats)*4) #Caculate mean and sd for problem q3
+  mutate(stats = (x^2+y^2 <= 1)*4) %>% #Check that data is within the unit circle 
+  summarize(mean = mean(stats), sd = sd(stats)) #Caculate mean and sd for problem q3
 df_q1
 ```
 
@@ -217,15 +217,20 @@ df_q1
 ``` r
 ## TASK: Estimate pi using your data from q1
 pi_est <- df_data %>% 
-  mutate(stat = (x^2 + y^2) <= 1) %>% 
-  summarize(mean = mean(stat)*4)
+  mutate(stats = (x^2+y^2 <= 1)*4) %>%
+  summarize(mean = mean(stat))
+```
+
+    ## Warning in mean.default(stat): argument is not numeric or logical: returning NA
+
+``` r
 pi_est
 ```
 
     ## # A tibble: 1 × 1
-    ##     mean
-    ##    <dbl>
-    ## 1 3.1456
+    ##    mean
+    ##   <dbl>
+    ## 1    NA
 
 # Quantifying Uncertainty
 
