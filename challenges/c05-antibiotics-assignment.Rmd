@@ -156,7 +156,7 @@ Note that your visual must be *qualitatively different* from *all* of
 your other visuals.
 
 ```{r q1.2}
-# WRITE YOUR CODE HERE
+# Visual 2
 df_antibiotics_long %>% 
   ggplot(aes( MIC, antibiotic, fill = gram )) + 
   geom_col()+
