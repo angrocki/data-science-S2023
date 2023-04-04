@@ -304,7 +304,8 @@ df_antibiotics_long %>%
     xintercept = 0.1,
     linetype = "dotted",
     color = "red"
-  ) 
+  ) + 
+  scale_x_log10()
 ```
 
 ![](c05-antibiotics-assignment_files/figure-gfm/q1.2-1.png)<!-- -->
