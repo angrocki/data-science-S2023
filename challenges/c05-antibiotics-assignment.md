@@ -271,15 +271,16 @@ df_antibiotics_long %>% knitr::kable()
 ``` r
 #Visual 1
 df_antibiotics_long %>% 
-  ggplot(aes(antibiotic, MIC)) +
+  ggplot(aes(bacteria, MIC)) +
   geom_boxplot() + 
-  geom_point(mapping = aes(color = bacteria, shape = gram)) +
+  geom_point(mapping = aes(color = antibiotic, shape = gram )) +
   geom_hline(
     yintercept = 0.1,
     linetype = "dotted",
     color = "red"
   ) +
-  scale_y_log10() 
+  scale_y_log10() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
 ![](c05-antibiotics-assignment_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
@@ -319,9 +320,43 @@ your other visuals.
 
 ``` r
 # WRITE YOUR CODE HERE
-df_antibiotics%>% 
+
+df_antibiotics_genus <- df_antibiotics %>% 
+  mutate(name = bacteria) %>% 
+  separate(name, c('genus', 'name'))
+```
+
+    ## Warning: Expected 2 pieces. Additional pieces discarded in 1 rows [10].
+
+``` r
+df_antibiotics_genus
+```
+
+    ## # A tibble: 16 × 7
+    ##    bacteria                        penicillin strept…¹ neomy…² gram  genus name 
+    ##    <chr>                                <dbl>    <dbl>   <dbl> <chr> <chr> <chr>
+    ##  1 Aerobacter aerogenes               870         1      1.6   nega… Aero… aero…
+    ##  2 Brucella abortus                     1         2      0.02  nega… Bruc… abor…
+    ##  3 Bacillus anthracis                   0.001     0.01   0.007 posi… Baci… anth…
+    ##  4 Diplococcus pneumonia                0.005    11     10     posi… Dipl… pneu…
+    ##  5 Escherichia coli                   100         0.4    0.1   nega… Esch… coli 
+    ##  6 Klebsiella pneumoniae              850         1.2    1     nega… Kleb… pneu…
+    ##  7 Mycobacterium tuberculosis         800         5      2     nega… Myco… tube…
+    ##  8 Proteus vulgaris                     3         0.1    0.1   nega… Prot… vulg…
+    ##  9 Pseudomonas aeruginosa             850         2      0.4   nega… Pseu… aeru…
+    ## 10 Salmonella (Eberthella) typhosa      1         0.4    0.008 nega… Salm… Eber…
+    ## 11 Salmonella schottmuelleri           10         0.8    0.09  nega… Salm… scho…
+    ## 12 Staphylococcus albus                 0.007     0.1    0.001 posi… Stap… albus
+    ## 13 Staphylococcus aureus                0.03      0.03   0.001 posi… Stap… aure…
+    ## 14 Streptococcus fecalis                1         1      0.1   posi… Stre… feca…
+    ## 15 Streptococcus hemolyticus            0.001    14     10     posi… Stre… hemo…
+    ## 16 Streptococcus viridans               0.005    10     40     posi… Stre… viri…
+    ## # … with abbreviated variable names ¹​streptomycin, ²​neomycin
+
+``` r
+df_antibiotics_genus%>% 
   ggplot(aes( penicillin,streptomycin, shape = gram )) + 
-  geom_point(mapping = aes(color = bacteria)) +
+  geom_point(mapping = aes(color = genus)) +
   geom_hline(
     yintercept = 0.1,
     linetype = "dotted",
@@ -333,7 +368,7 @@ df_antibiotics%>%
     color = "red"
   ) +
   scale_y_log10() +
-  scale_x_log10()
+  scale_x_log10() 
 ```
 
 ![](c05-antibiotics-assignment_files/figure-gfm/q1.3-1.png)<!-- -->
@@ -350,7 +385,7 @@ your other visuals.
 ``` r
 df_antibiotics_long %>% 
   ggplot(aes(MIC, bacteria)) +
-  geom_col(mapping = aes(fill = antibiotic)) + 
+  geom_col(position = "dodge", mapping = aes(fill = antibiotic)) + 
   scale_x_log10()+
   geom_vline(
     xintercept = 0.1,
@@ -447,10 +482,16 @@ and in 1984 *Streptococcus fecalis* was renamed *Enterococcus fecalis*
 
 \- What is your response to the question above?
 
-\- Diplococcus pneumoniae was renamed to Streptococcus pneumonia because
-it requires a high streptomycin MIC value at around 10. Furthermore,
-other Streptococcus named bacteria also had a large MIC value that
-ranges from 1 to around 15.
+\- Diplococcus pneumoniae has a high streptomycin MIC value of around 10
+which reflects a certain aspect of the biological structure of the
+bacteria. Other bacteria with the genus of Streptococcus also have a
+high streptomycin MIC value which indicates those bacteria also have
+similar biological structure. Based on the reactions to the MIC,
+scientists can look more closely into the biological structure of a
+bacteria, and rename the bacteria's genus based on that similar
+biological structure. Therefore, Diplococcus pneumoniae was renamed to
+Streptococcus pneumonia most likely because it shared a similar
+biological structure as other bacteria with the genus of Streptococcus.
 
 \- Which of your visuals above (1 through 5) is **most effective** at
 helping to answer this question?
