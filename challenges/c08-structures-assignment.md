@@ -210,13 +210,16 @@ summary(df_samples)
   - The mean strength of the material is approximately 40,000 psi.
 - To what extent can you tell what shape the distribution of the data
   has?
-  - The data looks vaguely like normal distribution with a few
-    exceptions including a peak towards the left.
+  - You can not tell the shape of the distribution of the data because
+    there is not enough of an observable trend in the dataset to say any
+    particular distribution.
 - Assuming the scopus is the strength of an individual part made from
   this aluminum alloy, is the observed variability real or induced?
   - The observed variability could be both real and induced since the
     variability could be in either the material or measurement of the
-    materiel.
+    materiel, yet according to the data description there should be no
+    induced variability since the data was collected “following the
+    highest standards of experimental rigor.”
 
 # Assessing Structural Safety
 
@@ -374,8 +377,8 @@ df_norm_sim <-
 
     ## Rows: 100,000
     ## Columns: 2
-    ## $ strength <dbl> 39637.88, 39956.42, 40229.16, 39539.69, 39704.36, 39644.99, 3…
-    ## $ g        <dbl> 422.1950, 740.7308, 1013.4736, 323.9998, 488.6722, 429.3049, …
+    ## $ strength <dbl> 40254.84, 39986.78, 40111.91, 39660.33, 40468.46, 40520.65, 3…
+    ## $ g        <dbl> 1039.15462, 771.08920, 896.22135, 444.64025, 1252.77006, 1304…
 
 ``` r
 ## NOTE: The following code estimates the POF and a 95% confidence interval
@@ -398,12 +401,14 @@ df_norm_pof
     ## # A tibble: 1 × 3
     ##   pof_lo pof_est pof_hi
     ##    <dbl>   <dbl>  <dbl>
-    ## 1 0.0180  0.0189 0.0197
+    ## 1 0.0169  0.0177 0.0186
 
 - Assuming your scopus is the probability of failure `POF` defined
   above, does your estimate exhibit real variability, induced
   variability, or both?
-  - The estimate exhibits both real variability and induced variability.
+  - The estimate only exhibits induced variability since real
+    variability would mean the underlying distribution would need to be
+    changing.
 - Does this confidence interval imply that `POF < 0.03`?
   - The confidence interval implies that `POF < 0.03` because the entire
     range for POF is below 0.03.
@@ -423,8 +428,9 @@ df_norm_pof
 - What could you do to tighten up the confidence interval?
   - Increasing the sample size will tighten up the confidence interval.
 - Can you *confidently* conclude that `POF < 0.03`? Why or why not?
-  - Yes because the POF and POF interval was calculated with 100,000
-    points which both fell below 0.03.
+  - You can not confidently conclude that POF \< 0.03 because POF value
+    is untrustworthy since it does not account for an important source
+    of uncertainty, the limited physical tests.
 
 ## A different way to compute the POF
 
@@ -500,8 +506,9 @@ df_samples %>% estimate_pof()
     limited physical tests.
 - With the scopus as the `POF`, would uncertainty due to *limited
   physical tests* be induced or real?
-  - Both because the uncertainty can be from the data and data
-    measurement.
+  - The uncertainty would be due to induced variability since real
+    variability would mean the underlying distribution would need to be
+    changing.
 
 ## Quantifying sampling uncertainty
 
@@ -533,9 +540,9 @@ df_samples %>%
 ```
 
     ## # A tibble: 1 × 6
-    ##   term    .lower .estimate .upper .alpha .method   
-    ##   <chr>    <dbl>     <dbl>  <dbl>  <dbl> <chr>     
-    ## 1 pof   0.000964    0.0177 0.0471   0.05 percentile
+    ##   term   .lower .estimate .upper .alpha .method   
+    ##   <chr>   <dbl>     <dbl>  <dbl>  <dbl> <chr>     
+    ## 1 pof   0.00123    0.0178 0.0486   0.05 percentile
 
 **Observations**:
 
@@ -545,7 +552,7 @@ df_samples %>%
     the confidence interval.
 - Does the confidence interval above account for uncertainty arising
   from *limited physical tests* (`df_samples`)? Why or why not?
-  - No because it still uses the same data set that had limited physical
-    tests.
+  - Yes because the the bootstrap explicitly quantifies uncertainty from
+    limited physical tests.
 - Can you confidently conclude that `POF < 0.03`? Why or why not?
   - No because the entire range is no longer below 0.03.

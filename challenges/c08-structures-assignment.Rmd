@@ -26,7 +26,7 @@ Unlike exercises, **challenges will be graded**. The following rubrics define ho
 <!-- ------------------------- -->
 
 | Category    | Needs Improvement                                                                                                | Satisfactory                                                                                                               |
-|-------------------|-----------------------------|-------------------------|
+|--------------|----------------------------|-------------------------------|
 | Effort      | Some task **q**'s left unattempted                                                                               | All task **q**'s attempted                                                                                                 |
 | Observed    | Did not document observations, or observations incorrect                                                         | Documented correct observations based on analysis                                                                          |
 | Supported   | Some observations not clearly supported by analysis                                                              | All observations clearly supported by analysis (table, graph, etc.)                                                        |
@@ -87,9 +87,9 @@ summary(df_samples)
 -   What is the mean strength of the material, approximately?
     -   The mean strength of the material is approximately 40,000 psi.
 -   To what extent can you tell what shape the distribution of the data has?
-    -   The data looks vaguely like normal distribution with a few exceptions including a peak towards the left.
+    -   You can not tell the shape of the distribution of the data because there is not enough of an observable trend in the dataset to say any particular distribution.
 -   Assuming the scopus is the strength of an individual part made from this aluminum alloy, is the observed variability real or induced?
-    -   The observed variability could be both real and induced since the variability could be in either the material or measurement of the materiel.
+    -   The observed variability could be both real and induced since the variability could be in either the material or measurement of the materiel, yet according to the data description there should be no induced variability since the data was collected "following the highest standards of experimental rigor."
 
 # Assessing Structural Safety
 
@@ -210,7 +210,7 @@ df_norm_pof
 ```
 
 -   Assuming your scopus is the probability of failure `POF` defined above, does your estimate exhibit real variability, induced variability, or both?
-    -   The estimate exhibits both real variability and induced variability.
+    -   The estimate only exhibits induced variability since real variability would mean the underlying distribution would need to be changing.
 -   Does this confidence interval imply that `POF < 0.03`?
     -   The confidence interval implies that `POF < 0.03` because the entire range for POF is below 0.03.
 -   Compare this probability with your estimate from q2; is it more or less trustworthy?
@@ -222,7 +222,7 @@ df_norm_pof
 -   What could you do to tighten up the confidence interval?
     -   Increasing the sample size will tighten up the confidence interval.
 -   Can you *confidently* conclude that `POF < 0.03`? Why or why not?
-    -   Yes because the POF and POF interval was calculated with 100,000 points which both fell below 0.03.
+    -   You can not confidently conclude that POF \< 0.03 because POF value is untrustworthy since it does not account for an important source of uncertainty, the limited physical tests.
 
 ## A different way to compute the POF
 
@@ -280,7 +280,7 @@ df_samples %>% estimate_pof()
 -   Does this estimate have any uncertainty due to *limited physical tests*? Why or why not?
     -   Yes because the estimate was calculated from the data set with limited physical tests.
 -   With the scopus as the `POF`, would uncertainty due to *limited physical tests* be induced or real?
-    -   Both because the uncertainty can be from the data and data measurement.
+    -   The uncertainty would be due to induced variability since real variability would mean the underlying distribution would need to be changing.
 
 ## Quantifying sampling uncertainty
 
@@ -310,6 +310,6 @@ df_samples %>%
 -   Does the confidence interval above account for uncertainty arising from *Monte Carlo approximation* of the POF? Why or why not?
     -   No because the Monte Carlo approximation was not used to calculate the confidence interval.
 -   Does the confidence interval above account for uncertainty arising from *limited physical tests* (`df_samples`)? Why or why not?
-    -   No because it still uses the same data set that had limited physical tests.
+    -   Yes because the the bootstrap explicitly quantifies uncertainty from limited physical tests.
 -   Can you confidently conclude that `POF < 0.03`? Why or why not?
     -   No because the entire range is no longer below 0.03.
