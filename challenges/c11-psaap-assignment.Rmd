@@ -81,7 +81,7 @@ glimpse(df_psaap)
 **Observations**:
 
 -   There are a lot of variables.
--   There are more variables then results for each category(140 variables with 22 results)
+-   There are 22 variables and 140 results.
 
 The important variables in this dataset are:
 
@@ -122,11 +122,12 @@ The primary output of interest is `T_norm = (avg_T - T_f) / T_f`, the normalized
 df_psaap %>% 
   ggplot(aes(x = x, y = T_norm)) + 
   facet_wrap(~idx) +
-  geom_point()
+  geom_line()
 
 df_psaap %>% 
   ggplot(aes(x = x, y = T_norm, color = factor(idx))) +
-  geom_point() 
+  geom_line() + 
+  geom_point()
 ```
 
 ## Modeling
@@ -237,17 +238,6 @@ rsquare(fit_q4, df_validate)
 
 Let's revisit the ideas of confidence intervals (CI) and prediction intervals (PI). Let's fit a very simple model to these data, one which only considers the channel location and ignores all other inputs. We'll also use the helper function `add_uncertainties()` (defined in the `setup` chunk above) to add approximate CI and PI to the linear model.
 
-```{## NOTE: No need to edit this chunk}
-fit_simple <-
-  df_train %>%
-  lm(data = ., formula = T_norm ~ x)
-
-df_intervals <-
-  df_train %>%
-  add_uncertainties(fit_simple, interval = "confidence", prefix = "ci") %>%
-  add_uncertainties(fit_simple, interval = "prediction", prefix = "pi")
-df_intervals
-```
 ```{r}
 fit_simple <-
   df_train %>%
@@ -447,7 +437,8 @@ bind_rows(
 -   What interval for `T_norm` would you recommend the design team to plan around?
     -   I am not sure, maybe 1.4 - 2.3 although I am not fully confident in those results.
 -   Are there any other recommendations you would provide?
-    -   Depending on research and more analysis, I think it's important to consider that factors they included and left out. This could lead to a new model that can have different predictions.
+    -   Depending on research and more analysis, I think it's important to consider that factors to included in a model. This could lead to a new model which could have different predictions.
+    -   For example, you could follow a procedure where you test each variable and see which variables help make the model more accurate. After accumulating a large and complicated model, you could then test each variable by removing and understanding the impact each variable has. After removing variables that have low impact, you could create a new model. In Question 4, I followed this model and used the variables x, W, U_0, d_p and rho_p which are different from the current model and can produce different T_norm intervals.
 
 *Bonus*: One way you could take this analysis further is to recommend which other variables the design team should tightly control. You could do this by fixing values in `df_design` and adding them to the model. An exercise you could carry out would be to systematically test the variables to see which ones the design team should more tightly control.
 

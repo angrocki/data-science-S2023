@@ -259,8 +259,7 @@ glimpse(df_psaap)
 **Observations**:
 
 - There are a lot of variables.
-- There are more variables then results for each category(140 variables
-  with 22 results)
+- There are 22 variables and 140 results.
 
 The important variables in this dataset are:
 
@@ -305,7 +304,7 @@ of fluid, for different experimental settings (e.g. different dimensions
 df_psaap %>% 
   ggplot(aes(x = x, y = T_norm)) + 
   facet_wrap(~idx) +
-  geom_point()
+  geom_line()
 ```
 
 ![](c11-psaap-assignment_files/figure-gfm/q2-task-1.png)<!-- -->
@@ -313,7 +312,8 @@ df_psaap %>%
 ``` r
 df_psaap %>% 
   ggplot(aes(x = x, y = T_norm, color = factor(idx))) +
-  geom_point() 
+  geom_line() + 
+  geom_point()
 ```
 
 ![](c11-psaap-assignment_files/figure-gfm/q2-task-2.png)<!-- -->
@@ -482,24 +482,17 @@ only considers the channel location and ignores all other inputs. We’ll
 also use the helper function `add_uncertainties()` (defined in the
 `setup` chunk above) to add approximate CI and PI to the linear model.
 
-\`\`\`{## NOTE: No need to edit this chunk} fit_simple \<- df_train %\>%
-lm(data = ., formula = T_norm \~ x)
+``` r
+fit_simple <-
+  df_train %>%
+  lm(data = ., formula = T_norm ~ x)
 
-df_intervals \<- df_train %\>% add_uncertainties(fit_simple, interval =
-“confidence”, prefix = “ci”) %\>% add_uncertainties(fit_simple, interval
-= “prediction”, prefix = “pi”) df_intervals
-
-
-    ```r
-    fit_simple <-
-      df_train %>%
-      lm(data = ., formula = T_norm ~ x)
-
-    df_intervals <-
-      df_train %>%
-      add_uncertainties(fit_simple, interval = "confidence", prefix = "ci") %>%
-      add_uncertainties(fit_simple, interval = "prediction", prefix = "pi")
-    df_intervals
+df_intervals <-
+  df_train %>%
+  add_uncertainties(fit_simple, interval = "confidence", prefix = "ci") %>%
+  add_uncertainties(fit_simple, interval = "prediction", prefix = "pi")
+df_intervals
+```
 
     ## # A tibble: 80 × 28
     ##        x   idx     L      W   U_0    N_p    k_f   T_f rho_f    mu_f  lam_f  C_fp
@@ -791,8 +784,16 @@ bind_rows(
     those results.
 - Are there any other recommendations you would provide?
   - Depending on research and more analysis, I think it’s important to
-    consider that factors they included and left out. This could lead to
-    a new model that can have different predictions.
+    consider that factors to included in a model. This could lead to a
+    new model which could have different predictions.
+  - For example, you could follow a procedure where you test each
+    variable and see which variables help make the model more accurate.
+    After accumulating a large and complicated model, you could then
+    test each variable by removing and understanding the impact each
+    variable has. After removing variables that have low impact, you
+    could create a new model. In Question 4, I followed this model and
+    used the variables x, W, U_0, d_p and rho_p which are different from
+    the current model and can produce different T_norm intervals.
 
 *Bonus*: One way you could take this analysis further is to recommend
 which other variables the design team should tightly control. You could
