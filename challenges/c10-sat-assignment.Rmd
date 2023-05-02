@@ -51,7 +51,7 @@ define how you will be graded, both on an individual and team basis.
 <!-- ------------------------- -->
 
 | Category    | Needs Improvement                                                                                                | Satisfactory                                                                                                               |
-|-------------------|----------------------------|-------------------------|
+|--------------|----------------------------|-------------------------------|
 | Effort      | Some task **q**'s left unattempted                                                                               | All task **q**'s attempted                                                                                                 |
 | Observed    | Did not document observations, or observations incorrect                                                         | Documented correct observations based on analysis                                                                          |
 | Supported   | Some observations not clearly supported by analysis                                                              | All observations clearly supported by analysis (table, graph, etc.)                                                        |
@@ -146,8 +146,15 @@ df_composite <-
 ```{r q2-task}
 ## TODO:
 df_composite %>% 
-  ggplot(aes( high_GPA, univ_GPA, color = both_SAT )) + 
-  geom_point()
+  ggplot(aes( x = univ_GPA)) + 
+  geom_point(aes(y = high_GPA, color = "high_GPA")) +
+  geom_point(aes(y = both_SAT *(4/1600), color = "both_SAT")) +
+  scale_y_continuous(
+    # Features of the first axis
+    name = "High School GPA",
+    # Add a second axis and specify its features
+    sec.axis = sec_axis( trans=~.*(1600/4), name="Both SAT")
+  ) 
 
 ```
 
@@ -217,7 +224,8 @@ cor.test(formula = ~ both_SAT + univ_GPA,
 **Observations**:
 
 -   Which correlations are significantly nonzero?
-    -   Both correlations are nonzero at around 0.68 to 0.78
+    -   Both correlations are nonzero because their confidence interval
+        does not include 0.
 -   Which of `high_GPA` and `both_SAT` seems to be more strongly
     correlated with `univ_GPA`?
     -   High_GPA.
@@ -341,6 +349,10 @@ fit_basic %>%
     conf.int = TRUE,
     conf.level = 0.99
   )
+
+##Checking results
+rsquare(fit_basic, df_train)
+rsquare(fit_basic, df_validate)
 ```
 
 **Observations**:
@@ -371,20 +383,28 @@ fit_mid %>%
     conf.int = TRUE,
     conf.level = 0.99
   )
+
+#Checking results
+rsquare(fit_mid, df_train)
+rsquare(fit_mid, df_validate)
+
 ```
 
 **Observations**:
 
 -   How well do these models perform, compared to the one you built in
     q6?
-    -   The models performs a lot better.
+    -   The models performs a lot better because the r square values are
+        higher.
 -   What is the confidence interval on the coefficient of `both_SAT`
     when including `high_GPA` as a predictor?? Is this coefficient
     significantly different from zero?
     -   The confidence interval was -0.000223 - .0018. The coefficient
         could be zero yet it could also different from zero.
 -   How do the hypothesis test results compare with the results in q6?
-    -   The hypothesis test results are better than the results in q6.
+    -   The hypothesis test results are better than the results in q6
+        because the r sqaure values are higher in the hypothesis than
+        q6.
 
 ## Synthesize
 

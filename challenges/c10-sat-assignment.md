@@ -254,8 +254,15 @@ df_composite <-
 ``` r
 ## TODO:
 df_composite %>% 
-  ggplot(aes( high_GPA, univ_GPA, color = both_SAT )) + 
-  geom_point()
+  ggplot(aes( x = univ_GPA)) + 
+  geom_point(aes(y = high_GPA, color = "high_GPA")) +
+  geom_point(aes(y = both_SAT *(4/1600), color = "both_SAT")) +
+  scale_y_continuous(
+    # Features of the first axis
+    name = "High School GPA",
+    # Add a second axis and specify its features
+    sec.axis = sec_axis( trans=~.*(1600/4), name="Both SAT")
+  ) 
 ```
 
 ![](c10-sat-assignment_files/figure-gfm/q2-task-1.png)<!-- -->
@@ -370,7 +377,8 @@ cor.test(formula = ~ both_SAT + univ_GPA,
 **Observations**:
 
 - Which correlations are significantly nonzero?
-  - Both correlations are nonzero at around 0.68 to 0.78
+  - Both correlations are nonzero because their confidence interval does
+    not include 0.
 - Which of `high_GPA` and `both_SAT` seems to be more strongly
   correlated with `univ_GPA`?
   - High_GPA.
@@ -519,6 +527,19 @@ fit_basic %>%
     ## 1 (Intercept) -0.172    0.352       -0.487 6.27e- 1 -1.10      0.753  
     ## 2 both_SAT     0.00274  0.000287     9.53  8.05e-16  0.00198   0.00349
 
+``` r
+##Checking results
+rsquare(fit_basic, df_train)
+```
+
+    ## [1] 0.4467457
+
+``` r
+rsquare(fit_basic, df_validate)
+```
+
+    ## [1] 0.5544037
+
 **Observations**:
 
 - What is the confidence interval on the coefficient of `both_SAT`? Is
@@ -556,17 +577,32 @@ fit_mid %>%
     ## 2 high_GPA    0.541     0.0837        6.47 0.00000000353  0.322      0.761  
     ## 3 both_SAT    0.000792  0.000387      2.05 0.0432        -0.000224   0.00181
 
+``` r
+#Checking results
+rsquare(fit_mid, df_train)
+```
+
+    ## [1] 0.604069
+
+``` r
+rsquare(fit_mid, df_validate)
+```
+
+    ## [1] 0.6918107
+
 **Observations**:
 
 - How well do these models perform, compared to the one you built in q6?
-  - The models performs a lot better.
+  - The models performs a lot better because the r square values are
+    higher.
 - What is the confidence interval on the coefficient of `both_SAT` when
   including `high_GPA` as a predictor?? Is this coefficient
   significantly different from zero?
   - The confidence interval was -0.000223 - .0018. The coefficient could
     be zero yet it could also different from zero.
 - How do the hypothesis test results compare with the results in q6?
-  - The hypothesis test results are better than the results in q6.
+  - The hypothesis test results are better than the results in q6
+    because the r sqaure values are higher in the hypothesis than q6.
 
 ## Synthesize
 
