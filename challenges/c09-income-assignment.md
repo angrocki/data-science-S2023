@@ -534,9 +534,10 @@ df_data %>%
   - Dukes and Nantucket have no 6 person families.
 - Can you confidently distinguish between household incomes in Suffolk
   county? Why or why not?
-  - No because a lot of the household incomes overlap and are similar.
-    Moreover, there is not a conisitent range each household income
-    stays in between different counties.
+  - No because the household incomes in Suffolk overlap and are
+    extremely close together. One income could fall into the range of
+    multiple households especially with from 4 to 6 people family
+    households.
 - Which counties have the widest confidence intervals?
   - Nantucket, Dukes, Berkshire, and Hampshire.
 
@@ -551,9 +552,9 @@ and uncertainty.
 ``` r
 df_data %>%
   ggplot(aes(x= population_estimate, y = income_SE)) + 
-  geom_point() + 
+  geom_point(alpha = .2) + 
   scale_x_log10() +
-  scale_y_log10()
+  scale_y_log10() 
 ```
 
     ## Warning: Removed 819 rows containing missing values (`geom_point()`).
@@ -564,9 +565,13 @@ df_data %>%
 
 - What *overall* trend do you see between `SE` and population? Why might
   this trend exist?
-  - The overall trend between SE and population is as the population
-    increases, the SE decreases. Larger data sets help calculate more
-    accurate means, thus creating a lower SE.
+  - There is no overall trend between SE and population because standard
+    error does not depend on population size, only sample size. Although
+    a larger population does not directly lead to a larger sample size,
+    the Census Bureau could collect data proportional to the target
+    population, thus a larger population would lead to a larger sample
+    size. This method of collecting data would create a correlation
+    between SE and population seen very roughly by the graph.
 - What does this *overall* trend tell you about the relative ease of
   studying small vs large counties?
   - Although it is more time consuming to initially collect data from
